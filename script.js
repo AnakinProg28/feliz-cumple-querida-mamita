@@ -40,6 +40,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ===== HEART EXPLOSION =====
+    const heartBtn = document.getElementById('heartBtn');
+    const heartExplosion = document.getElementById('heartExplosion');
+
+    heartBtn.addEventListener('click', function(e) {
+        // Create 20 exploding hearts
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('exploding-heart');
+            heart.textContent = '❤️';
+            
+            // Random angle and distance for explosion
+            const angle = (Math.PI * 2 * i) / 20;
+            const distance = 150 + Math.random() * 100;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance - 50;
+            
+            heart.style.setProperty('--tx', tx + 'px');
+            heart.style.setProperty('--ty', ty + 'px');
+            heart.style.left = '50%';
+            heart.style.top = '50%';
+            
+            heartExplosion.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => heart.remove(), 1000);
+        }
+    });
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
