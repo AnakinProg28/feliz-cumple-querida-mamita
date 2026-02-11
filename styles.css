@@ -262,16 +262,16 @@ footer p {
     color: white;
     border: none;
     border-radius: 50%;
-    @keyframes explode {
-        0% {
-            opacity: 1;
-            transform: translate(0, 0) translate(-50%, -50%) scale(1) rotate(var(--r, 0deg));
-        }
-        100% {
-            opacity: 0;
-            transform: translate(var(--tx), var(--ty)) translate(-50%, -50%) scale(0.3) rotate(calc(var(--r, 0deg) + 90deg));
-        }
-    }
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
 }
 
 .music-btn:hover {
@@ -391,29 +391,23 @@ footer p {
     position: relative;
     display: flex;
     justify-content: center;
-    font-size: 40px;
-    animation: explode var(--d, 1s) cubic-bezier(.16,.84,.34,1) forwards;
-    user-select: none;
-    pointer-events: none;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    transform-origin: center center;
+    align-items: center;
+    height: 300px;
+}
+
 .heart-button {
     font-size: 100px;
-@keyframes explode {
-    0% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) translate(-50%, -50%) scale(1) rotate(var(--r, 0deg));
-    }
-    100% {
-        opacity: 0;
-        transform: translate3d(var(--tx), var(--ty), 0) translate(-50%, -50%) scale(0.35) rotate(calc(var(--r, 0deg) + 90deg));
-    }
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    animation: heartBeat 1.5s infinite;
+    user-select: none;
 }
-    transform: scale(1.1);
-    animation-duration: 0.6s;
-    /* Faster beat on hover */
-    filter: drop-shadow(0 0 25px rgba(194, 24, 91, 0.8));
+
+.heart-button:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 20px rgba(194, 24, 91, 0.6));
 }
 
 .heart-button:active {
@@ -421,23 +415,13 @@ footer p {
 }
 
 @keyframes heartBeat {
-    0% {
+    0%, 100% {
         transform: scale(1);
     }
-
-    14% {
+    25% {
         transform: scale(1.1);
     }
-
-    28% {
-        transform: scale(1);
-    }
-
-    42% {
-        transform: scale(1.1);
-    }
-
-    70% {
+    50% {
         transform: scale(1);
     }
 }
@@ -455,20 +439,21 @@ footer p {
 .exploding-heart {
     position: absolute;
     font-size: 40px;
-    animation: explode 1s ease-out forwards;
+    animation: explode var(--d, 1s) ease-out forwards;
     user-select: none;
     pointer-events: none;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 @keyframes explode {
     0% {
         opacity: 1;
-        transform: translate(0, 0) scale(1) rotate(0deg);
+        transform: translate3d(0, 0, 0) translate(-50%, -50%) scale(1) rotate(var(--r, 0deg));
     }
-
     100% {
         opacity: 0;
-        transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--rot));
+        transform: translate3d(var(--tx), var(--ty), 0) translate(-50%, -50%) scale(0.3) rotate(calc(var(--r, 0deg) + 360deg));
     }
 }
 
