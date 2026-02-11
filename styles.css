@@ -391,22 +391,25 @@ footer p {
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 300px;
-}
-
+    font-size: 40px;
+    animation: explode var(--d, 1s) cubic-bezier(.16,.84,.34,1) forwards;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-origin: center center;
 .heart-button {
     font-size: 100px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    animation: heartBeat 1.2s infinite;
-    user-select: none;
-    filter: drop-shadow(0 0 15px rgba(194, 24, 91, 0.4));
+@keyframes explode {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) translate(-50%, -50%) scale(1) rotate(var(--r, 0deg));
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--tx), var(--ty), 0) translate(-50%, -50%) scale(0.35) rotate(calc(var(--r, 0deg) + 90deg));
+    }
 }
-
-.heart-button:hover {
     transform: scale(1.1);
     animation-duration: 0.6s;
     /* Faster beat on hover */
