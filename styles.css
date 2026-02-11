@@ -333,6 +333,7 @@ footer p {
         transform: scale(0.8);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;
@@ -399,14 +400,17 @@ footer p {
     background: none;
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
-    animation: heartBeat 1.5s infinite;
+    transition: all 0.3s ease;
+    animation: heartBeat 1.2s infinite;
     user-select: none;
+    filter: drop-shadow(0 0 15px rgba(194, 24, 91, 0.4));
 }
 
 .heart-button:hover {
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 20px rgba(194, 24, 91, 0.6));
+    transform: scale(1.1);
+    animation-duration: 0.6s;
+    /* Faster beat on hover */
+    filter: drop-shadow(0 0 25px rgba(194, 24, 91, 0.8));
 }
 
 .heart-button:active {
@@ -414,13 +418,23 @@ footer p {
 }
 
 @keyframes heartBeat {
-    0%, 100% {
+    0% {
         transform: scale(1);
     }
-    25% {
+
+    14% {
         transform: scale(1.1);
     }
-    50% {
+
+    28% {
+        transform: scale(1);
+    }
+
+    42% {
+        transform: scale(1.1);
+    }
+
+    70% {
         transform: scale(1);
     }
 }
@@ -446,11 +460,12 @@ footer p {
 @keyframes explode {
     0% {
         opacity: 1;
-        transform: translate(0, 0) scale(1);
+        transform: translate(0, 0) scale(1) rotate(0deg);
     }
+
     100% {
         opacity: 0;
-        transform: translate(var(--tx), var(--ty)) scale(0);
+        transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--rot));
     }
 }
 

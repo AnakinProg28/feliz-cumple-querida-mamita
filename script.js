@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Open modal when clicking on gallery images
     galleryImages.forEach(img => {
-        img.addEventListener('click', function() {
+        img.addEventListener('click', function () {
             modal.classList.add('show');
             modalImg.src = this.src;
             captionText.textContent = this.alt || 'Foto';
@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Close modal when clicking the X button
-    closeBtn.addEventListener('click', function() {
+    closeBtn.addEventListener('click', function () {
         modal.classList.remove('show');
         document.body.style.overflow = 'auto'; // Allow scrolling again
     });
 
     // Close modal when clicking outside the image
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === modal) {
             modal.classList.remove('show');
             document.body.style.overflow = 'auto';
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('show')) {
             modal.classList.remove('show');
             document.body.style.overflow = 'auto';
@@ -44,26 +44,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const heartBtn = document.getElementById('heartBtn');
     const heartExplosion = document.getElementById('heartExplosion');
 
-    heartBtn.addEventListener('click', function(e) {
-        // Create 20 exploding hearts
-        for (let i = 0; i < 20; i++) {
+    heartBtn.addEventListener('click', function (e) {
+        // Create 50 exploding hearts and sparkles
+        const emojis = ['❤️', '💖', '💗', '💓', '✨', '😍', '🥰'];
+
+        for (let i = 0; i < 50; i++) {
             const heart = document.createElement('div');
             heart.classList.add('exploding-heart');
-            heart.textContent = '❤️';
-            
+            heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
             // Random angle and distance for explosion
-            const angle = (Math.PI * 2 * i) / 20;
-            const distance = 150 + Math.random() * 100;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 50 + Math.random() * 200; // Varying distances
             const tx = Math.cos(angle) * distance;
             const ty = Math.sin(angle) * distance - 50;
-            
+
+            // Random rotation
+            const rotation = Math.random() * 360;
+
             heart.style.setProperty('--tx', tx + 'px');
             heart.style.setProperty('--ty', ty + 'px');
+            heart.style.setProperty('--rot', rotation + 'deg'); // Set rotation variable
             heart.style.left = '50%';
             heart.style.top = '50%';
-            
+            heart.style.fontSize = (20 + Math.random() * 30) + 'px'; // Random size
+
             heartExplosion.appendChild(heart);
-            
+
             // Remove heart after animation
             setTimeout(() => heart.remove(), 1000);
         }
