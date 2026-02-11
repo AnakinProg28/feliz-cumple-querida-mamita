@@ -44,37 +44,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const heartBtn = document.getElementById('heartBtn');
     const heartExplosion = document.getElementById('heartExplosion');
 
-    heartBtn.addEventListener('click', function (e) {
-        // Create 50 exploding hearts and sparkles
-        const emojis = ['❤️', '💖', '💗', '💓', '✨', '😍', '🥰'];
+    if (heartBtn && heartExplosion) {
+        let disabled = false;
+        heartBtn.addEventListener('click', function (e) {
+            if (disabled) return;
+            disabled = true;
+            setTimeout(() => disabled = false, 250); // small debounce to avoid floods
 
-        for (let i = 0; i < 50; i++) {
-            const heart = document.createElement('div');
-            heart.classList.add('exploding-heart');
-            heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            // Emoji options
+            const emojis = ['❤️', '💖', '💗', '💓', '✨', '😍', '🥰'];
+            const count = 30; // reasonable number to avoid performance issues
 
-            // Random angle and distance for explosion
-            const angle = Math.random() * Math.PI * 2;
-            const distance = 50 + Math.random() * 200; // Varying distances
-            const tx = Math.cos(angle) * distance;
-            const ty = Math.sin(angle) * distance - 50;
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('exploding-heart');
+                heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
 
-            // Random rotation
-            const rotation = Math.random() * 360;
+                // Random angle and distance for explosion
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 60 + Math.random() * 180; // px
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - (10 + Math.random() * 40);
 
-            heart.style.setProperty('--tx', tx + 'px');
-            heart.style.setProperty('--ty', ty + 'px');
-            heart.style.setProperty('--rot', rotation + 'deg'); // Set rotation variable
-            heart.style.left = '50%';
-            heart.style.top = '50%';
-            heart.style.fontSize = (20 + Math.random() * 30) + 'px'; // Random size
+                // Random rotation and size
+                const rot = Math.floor(Math.random() * 360);
+                const size = 18 + Math.floor(Math.random() * 32);
 
-            heartExplosion.appendChild(heart);
+                heart.style.setProperty('--tx', tx + 'px');
+                heart.style.setProperty('--ty', ty + 'px');
+                heart.style.setProperty('--r', rot + 'deg'); // matches CSS var --r
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.fontSize = size + 'px';
 
-            // Remove heart after animation
-            setTimeout(() => heart.remove(), 1000);
-        }
-    });
+                heartExplosion.appendChild(heart);
+
+                // Remove heart after animation ends
+                heart.addEventListener('animationend', () => heart.remove(), { once: true });
+            }
+        });
+    }
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
