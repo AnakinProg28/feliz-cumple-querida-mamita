@@ -45,61 +45,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const heartExplosion = document.getElementById('heartExplosion');
 
     if (heartBtn && heartExplosion) {
-        let disabled = false;
+        let isAnimating = false;
+
         heartBtn.addEventListener('click', function (e) {
-            if (disabled) return;
-            disabled = true;
-            setTimeout(() => disabled = false, 250); // small debounce to avoid floods
+            if (isAnimating) return;
+            isAnimating = true;
+            setTimeout(() => isAnimating = false, 500);
 
-                // Emoji options
-                const emojis = ['❤️', '💖', '💗', '💓', '✨', '😍', '🥰'];
+            const emojis = ['❤️', '💖', '💗', '💓', '✨', '😍', '🥰'];
+            const count = 24;
 
-                // Adaptive count to avoid lag on small devices
-                const vw = window.innerWidth || document.documentElement.clientWidth;
-                let count = 30;
-                if (vw < 480) count = 10;
-                else if (vw < 900) count = 18;
-                else if (vw > 1400) count = 40;
+            const frag = document.createDocumentFragment();
 
-                // Use fragment to batch DOM insertion
-                const frag = document.createDocumentFragment();
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('exploding-heart');
+                heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
 
-                for (let i = 0; i < count; i++) {
-                    const heart = document.createElement('div');
-                    heart.classList.add('exploding-heart');
-                    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                // Lateral dispersion: bias left/right
+                const isLeft = i < count / 2;
+                const angleBase = isLeft ? Math.PI : 0;
+                const angleSpread = (Math.PI / 3) * (Math.random() - 0.5);
+                const angle = angleBase + angleSpread;
 
-                    // Bias angles toward sides (left/right) to create dispersion lateral
-                    const side = Math.random() < 0.5 ? -1 : 1; // left or right
-                    const spread = Math.PI / 4; // 45deg spread
-                    const base = side === 1 ? 0 : Math.PI; // right or left
-                    const angle = base + (Math.random() - 0.5) * spread;
+                const speed = 80 + Math.random() * 120;
+                const tx = Math.cos(angle) * speed;
+                const ty = Math.sin(angle) * speed - 40;
 
-                    // Distance and small vertical variation
-                    const distance = (60 + Math.random() * 180) * (0.9 + Math.random() * 0.6);
-                    const tx = Math.cos(angle) * distance;
-                    const ty = Math.sin(angle) * distance * 0.5 + (Math.random() * 30 - 10);
+                const rot = Math.floor(Math.random() * 360);
+                const size = 16 + Math.floor(Math.random() * 28);
+                const duration = 0.8 + Math.random() * 0.6;
 
-                    // Random rotation, size and duration
-                    const rot = Math.floor(Math.random() * 360);
-                    const size = 14 + Math.floor(Math.random() * 30);
-                    const dur = (0.7 + Math.random() * 0.8).toFixed(2); // 0.7 - 1.5s
+                heart.style.setProperty('--tx', tx + 'px');
+                heart.style.setProperty('--ty', ty + 'px');
+                heart.style.setProperty('--r', rot + 'deg');
+                heart.style.setProperty('--d', duration + 's');
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.fontSize = size + 'px';
 
-                    heart.style.setProperty('--tx', tx + 'px');
-                    heart.style.setProperty('--ty', ty + 'px');
-                    heart.style.setProperty('--r', rot + 'deg');
-                    heart.style.setProperty('--d', dur + 's');
-                    heart.style.left = '50%';
-                    heart.style.top = '50%';
-                    heart.style.fontSize = size + 'px';
+                frag.appendChild(heart);
 
-                    frag.appendChild(heart);
+                heart.addEventListener('animationend', () => heart.remove(), { once: true });
+            }
 
-                    // Remove after animation ends to avoid setTimeout accumulation
-                    heart.addEventListener('animationend', () => heart.remove(), { once: true });
-                }
-
-                heartExplosion.appendChild(frag);
+            heartExplosion.appendChild(frag);
         });
     }
 
