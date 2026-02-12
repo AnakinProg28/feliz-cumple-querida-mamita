@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const angleSpread = (Math.PI / 3) * (Math.random() - 0.5);
                 const angle = angleBase + angleSpread;
 
-                const speed = isMobile ? (50 + Math.random() * 70) : (80 + Math.random() * 120);
+                const speed = isMobile ? (80 + Math.random() * 120) : (150 + Math.random() * 200);
                 const tx = Math.cos(angle) * speed;
-                const ty = Math.sin(angle) * speed - 30;
+                const ty = Math.sin(angle) * speed - 50;
 
                 const rot = Math.floor(Math.random() * 360);
                 const size = isMobile ? (12 + Math.random() * 12) : (16 + Math.random() * 28);
