@@ -50,17 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
         heartBtn.addEventListener('click', function (e) {
             if (isAnimating) return;
             isAnimating = true;
-            setTimeout(() => isAnimating = false, 500);
+            setTimeout(() => isAnimating = false, 300);
 
-            const emojis = ['❤️', '💖', '💗', '💓', '✨', '😍', '🥰'];
-            const count = 24;
+            // Detectar si es móvil y ajustar cantidad
+            const isMobile = window.innerWidth < 768;
+            const count = isMobile ? 8 : 24;
+            const emojis = ['❤️', '💖', '💗'];
 
             const frag = document.createDocumentFragment();
 
             for (let i = 0; i < count; i++) {
                 const heart = document.createElement('div');
                 heart.classList.add('exploding-heart');
-                heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                heart.textContent = emojis[i % emojis.length];
 
                 // Lateral dispersion: bias left/right
                 const isLeft = i < count / 2;
@@ -68,13 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const angleSpread = (Math.PI / 3) * (Math.random() - 0.5);
                 const angle = angleBase + angleSpread;
 
-                const speed = 80 + Math.random() * 120;
+                const speed = isMobile ? (50 + Math.random() * 70) : (80 + Math.random() * 120);
                 const tx = Math.cos(angle) * speed;
-                const ty = Math.sin(angle) * speed - 40;
+                const ty = Math.sin(angle) * speed - 30;
 
                 const rot = Math.floor(Math.random() * 360);
-                const size = 16 + Math.floor(Math.random() * 28);
-                const duration = 0.8 + Math.random() * 0.6;
+                const size = isMobile ? (12 + Math.random() * 12) : (16 + Math.random() * 28);
+                const duration = isMobile ? 0.6 : (0.8 + Math.random() * 0.6);
 
                 heart.style.setProperty('--tx', tx + 'px');
                 heart.style.setProperty('--ty', ty + 'px');
