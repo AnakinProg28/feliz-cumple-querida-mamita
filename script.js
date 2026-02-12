@@ -191,21 +191,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 musicBtn.title = "Reproducir música";
             }
         });
-
-        // Try to start playback on the first user interaction (prevents autoplay block)
-        document.body.addEventListener('click', () => {
-            if (audio.paused) {
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        musicBtn.textContent = '⏸️';
-                        musicBtn.classList.add('playing');
-                        musicBtn.title = 'Pausar música';
-                    }).catch((err) => {
-                        console.warn('No se pudo reproducir automáticamente:', err);
-                    });
-                }
-            }
-        }, { once: true });
     }
 });
