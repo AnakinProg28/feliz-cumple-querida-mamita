@@ -401,7 +401,7 @@ footer p {
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
-    animation: heartBeat 1.5s infinite;
+    animation: heartBeat 2s ease-in-out 1s infinite;
     user-select: none;
 }
 
@@ -418,11 +418,8 @@ footer p {
     0%, 100% {
         transform: scale(1);
     }
-    25% {
-        transform: scale(1.1);
-    }
     50% {
-        transform: scale(1);
+        transform: scale(1.08);
     }
 }
 

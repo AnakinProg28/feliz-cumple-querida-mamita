@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Detectar si es móvil y ajustar cantidad
             const isMobile = window.innerWidth < 768;
             const count = isMobile ? 8 : 24;
-            const emojis = ['❤️', '💖', '💗'];
+            const emojis = ['❤️', '�', '😳'];
 
             const frag = document.createDocumentFragment();
 
