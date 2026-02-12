@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ty = Math.sin(angle) * speed - 50;
 
                 const rot = Math.floor(Math.random() * 360);
-                const size = isMobile ? (12 + Math.random() * 12) : (16 + Math.random() * 28);
+                const size = isMobile ? (24 + Math.random() * 24) : (36 + Math.random() * 48);
                 const duration = isMobile ? 0.6 : (0.8 + Math.random() * 0.6);
 
                 heart.style.setProperty('--tx', tx + 'px');
